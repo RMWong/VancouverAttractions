@@ -46,6 +46,9 @@ reln([the,location,of | T],T,O1,O2,C,[location(O2,O1)|C]).
 reln([the,description,of | T],T,O1,O2,C,[description(O2,O1)|C]).
 reln([the,rating,for | T],T,O1,O2,C,[rating(O2,O1)|C]).
 reln([the,ratings,for | T],T,O1,O2,C,[rating(O2,O1)|C]).
+reln([the,amount,of,time,spent,at | T],T,O1,O2,C,[howLongAt(O2,O1)|C]).
+reln([the,tag,of | T],T,O1,O2,C,[tags(O2,O1)|C]).
+reln([the,attractions,that,have,a, T1| T],T,O1,_,C,[tags(O1,T1)|C]).
 
 % question(Question,QR,Object,Q0,Query) is true if Query provides an answer about Object to Question
 question([what,are | T0],T1,Obj,C0,C1) :-
@@ -55,6 +58,7 @@ question([what,are | T0],T1,Obj,C0,C1) :-
 question([what,is | T0],T1,Obj,C0,C1) :-
   mp(T0,T1,Obj,C0,C1).
 
+noun([tag | T],T,_,C,C).
 noun([vancouver | T],T,vancouver,C,C).
 noun([dollars | T],T,_,C,C).
 noun([points | T],T,_,C,C).
@@ -225,6 +229,9 @@ howLongAt(gastown, [1,-,2,hours]).
 ?- ask([what,is,the,cost,of,X],A).      // returns cost of specified attraction name X
 ?- ask([what,is,the,location,of,X],A).      // returns location of specified attraction name X in form of a list
 ?- ask([what,is,the,description,of,X],A).   // returns description of specified attraction name X in form of list
+?- ask([what,is,the,amount,of,time,spent,at,X],A)   // returns the amount of time in hours people generally spend at attraction name X in form of list
+?- ask([what,is,the,tag,of,X],A)                              // returns type of attraction
+?- ask([what,are,the,attractions,that,have,a,X,tag],A)  // returns all attractions with tag name X
 */
 
 /* Extra part
@@ -233,4 +240,6 @@ howLongAt(gastown, [1,-,2,hours]).
     ask([what,is,the,rating,for,X],A).
     OR
     ask([what,are,the,ratings,for,X],A).
+    OR
+    ask([what,are,the,attractions,that,have,rating,X,points],A).
 */
