@@ -20,6 +20,7 @@ noun_phrase(T0,T4,Obj,C0,C4) :-
 
 % Determiners are ignored in this oversimplified example.
 det([the | T],T,_,C,C).
+det([an | T],T,_,C,C).
 det(T,T,_,C,C).
 
 % adjectives consist of a sequence of adjectives.
@@ -39,6 +40,7 @@ mp([that|T0],T2,O1,C0,C2) :-
 
 reln([the,attractions,in | T],T,O1,O2,C,[attraction(O2,O1)|C]).
 reln([the,attractions,that,have,rating,P | T],T,O1,_,C,[rating(O1,P)|C]).
+reln([an,attraction,that,costs,C1 | T],T,O1,_,C,[cost(C1,O1)|C]).
 reln([the,cost,of | T],T,O1,O2,C,[cost(O2,O1)|C]).
 reln([the,location,of | T],T,O1,O2,C,[location(O2,O1)|C]).
 reln([the,description,of | T],T,O1,O2,C,[description(O2,O1)|C]).
@@ -54,6 +56,7 @@ question([what,is | T0],T1,Obj,C0,C1) :-
   mp(T0,T1,Obj,C0,C1).
 
 noun([vancouver | T],T,vancouver,C,C).
+noun([dollars | T],T,_,C,C).
 noun([points | T],T,_,C,C).
 noun([scienceworld | T],T,scienceworld,C,C).
 noun([gastown | T],T,gastown,C,C).
@@ -85,7 +88,6 @@ prove_all([H|T]) :-
     prove_all(T).
 
 %  The Database of Facts to be Queried
-
 attraction(vancouver, stanleyPark).
 attraction(vancouver, vancouverAquarium).
 attraction(vancouver, vanDuesenBotanicalGarden).
@@ -122,12 +124,16 @@ tags(rodgersArena, stadium).
 tags(granvilleIsland, area).
 tags(gastown, area).
 
+cost(0, stanleyPark).
 cost(stanleyPark, 0).
+cost(0,lynnCanyon).
 cost(lynnCanyon, 0).
+cost(0,queensPark).
 cost(queensPark, 0).
+cost(19.40, scienceWorld).
+cost(scienceWorld, 19.40).
 cost(capilanoSuspensionBridge, ["adult(17-64)",39.95,"senior(65+)",36.95,student,32.95,"youth(13-16)",26.95,"child(6-12)",13.95,kids,free]).
 cost(bloedelFloralConservatory, ["adult(19-64)",6.75,"senior(65+)",4.50,"youth(13-18)",4.50,"child(3-12)",3.25,"infant(0-2)",free]).
-cost(scienceworld, 19.40).
 cost(vancouverAquarium, ["adult(19-64)",36,"senior(65+)",27,"youth(13-18)",27,student,27,"child(4-12)",21,"infant(0-3)",free]).
 cost(vanDuesenBotanicalGarden, ["adult(19-64)",11.25,"senior(65+)",8.50,"youth(13-18)",8.50,"child(3-12)",5.75,"infant(0-2)",free]).
 cost(beatyBiodiversityMuseum, [adult,14,"senior(55+)",12,"youth(13-17)",12,"child(5-12)",10,"child(0-4)",free]).
@@ -215,6 +221,7 @@ howLongAt(gastown, [1,-,2,hours]).
 /* Basic queries:
 ?- ask([what,are,the,attractions,in,vancouver],A).  // returns all attraction names
 ?- ask([what,are,the,attractions,that,have,rating,X,points],A).
+?- ask([what,is,an,attraction,that,costs,19.40,dollars],A).
 ?- ask([what,is,the,cost,of,X],A).      // returns cost of specified attraction name X
 ?- ask([what,is,the,location,of,X],A).      // returns location of specified attraction name X in form of a list
 ?- ask([what,is,the,description,of,X],A).   // returns description of specified attraction name X in form of list
