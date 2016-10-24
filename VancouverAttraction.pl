@@ -38,6 +38,7 @@ mp([that|T0],T2,O1,C0,C2) :-
     noun_phrase(T1,T2,O2,C1,C2).
 
 reln([the,attractions,in | T],T,O1,O2,C,[attraction(O2,O1)|C]).
+reln([the,attractions,that,have,rating,P | T],T,O1,_,C,[rating(O1,P)|C]).
 reln([the,cost,of | T],T,O1,O2,C,[cost(O2,O1)|C]).
 reln([the,location,of | T],T,O1,O2,C,[location(O2,O1)|C]).
 reln([the,description,of | T],T,O1,O2,C,[description(O2,O1)|C]).
@@ -53,6 +54,7 @@ question([what,is | T0],T1,Obj,C0,C1) :-
   mp(T0,T1,Obj,C0,C1).
 
 noun([vancouver | T],T,vancouver,C,C).
+noun([points | T],T,_,C,C).
 noun([scienceworld | T],T,scienceworld,C,C).
 noun([gastown | T],T,gastown,C,C).
 noun([lynncanyon | T],T,lynncanyon,C,C).
@@ -157,6 +159,7 @@ location(rogersArena, [800,griffiths,way]).
 location(granvilleIsland, [1669,johnston,st]).
 location(gastown, [300,water,st]).
 
+
 rating(stanleyPark,0).
 rating(lynnCanyon,0).
 rating(queensPark,0).
@@ -211,6 +214,7 @@ howLongAt(gastown, [1,-,2,hours]).
 
 /* Basic queries:
 ?- ask([what,are,the,attractions,in,vancouver],A).  // returns all attraction names
+?- ask([what,are,the,attractions,that,have,rating,X,points],A).
 ?- ask([what,is,the,cost,of,X],A).      // returns cost of specified attraction name X
 ?- ask([what,is,the,location,of,X],A).      // returns location of specified attraction name X in form of a list
 ?- ask([what,is,the,description,of,X],A).   // returns description of specified attraction name X in form of list
