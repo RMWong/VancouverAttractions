@@ -219,5 +219,7 @@ howLongAt(gastown, [1,-,2,hours]).
 /* Extra part
     rate(scienceworld, A). // Will prompt a user to enter a numerical rating for the attraction
     The rating can dynamically be read using
-    ask([what,is,the,rating,of,X],A).
+    ask([what,is,the,rating,for,X],A).
+    OR
+    ask([what,are,the,ratings,for,X],A).
 */
